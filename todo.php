@@ -15,32 +15,31 @@ if (isset($_POST['todo'])) {
         'todo'  => $data,
         'status' => 0
     ];
-    $daftar_belanja = serialize($todos);
-    file_put_contents('todo.txt', $daftar_belanja);
-    //redirect halaman
-    header('location:todo.php');
+    saveData($todos);
 }
 //jika ditemukan $_GET['status']
 if (isset($_GET['status'])) {
     //ubah status
     $todos[$_GET['key']]['status'] = $_GET['status'];
-    $daftar_belanja = serialize($todos);
-    file_put_contents('todo.txt', $daftar_belanja);
-    //redirect halaman
-    header('location:todo.php');
+    saveData($todos);
 }
 
 if (isset($_GET['hapus'])) {
     unset($todos[$_GET['key']]);
-    file_put_contents('todo.txt', $daftar_belanja);
+    saveData($todos);
+}
+
+function saveData($todos)
+{
+    $daftar = serialize($todos);
+    file_put_contents('todo.txt', $daftar);
     //redirect halaman
     header('location:todo.php');
 }
-print_r($todos);
 ?>
 <h1>Todo App</h1>
 <form action="" method="POST">
-    <label>Daftar Belanja Hari ini<label><br>
+    <label>Daftar To Do Hari ini<label><br>
             <input type="text" name="todo">
             <button type="submit">Simpan</button>
 </form>
@@ -58,7 +57,7 @@ print_r($todos);
                     }
                     ?>
                 </label>
-                <a href='todo.php?hapus=1&key=<?php echo $key ?>'>hapus</a>
+                <a href='todo.php?hapus=1&key=<?php echo $key ?>' onclick="return confirm('Apakah Anda yakin menghapus to do list ini?')"">hapus</a>
             </li>
         <?php endforeach; ?>
     </ul>
