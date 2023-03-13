@@ -1,0 +1,1 @@
+[{"nama":"Toni","alamat":"Bandung"},{"nama":"Naufal","alamat":"Bandung"},{"nama":"Davi","alamat":"Jakarta"}]
